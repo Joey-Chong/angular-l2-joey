@@ -2,3 +2,7 @@
   <input id="stockInput" name="stockSymbol" ngModel />
   <button id="trackBtn" type="submit">Track Stock</button>
 </form>
+
+<div *ngFor="let stock of stockList">
+  <h1>{{ stock }}</h1>
+</div>
