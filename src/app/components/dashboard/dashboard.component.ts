@@ -15,8 +15,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit(form: NgForm) {
-    console.log(form.value);
+    this.localStorageService.addStock(form.value.stockSymbol);
     form.resetForm();
-    this.localStorageService.addStock('something');
   }
 }
