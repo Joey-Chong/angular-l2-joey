@@ -36,6 +36,7 @@ export class LocalStorageService {
     const stockSymbols: string[] = JSON.parse(
       localStorage.getItem('stockSymbols')
     );
+    if (!stockSymbols) return false;
     return stockSymbols.indexOf(symbol) !== -1;
   }
 }
