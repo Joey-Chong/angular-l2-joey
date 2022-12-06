@@ -1,22 +1,26 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { env } from '../environment';
 import { map, tap } from 'rxjs/operators';
-import { IStockCard } from '../models/stock-card';
+import {
+  IStockCard,
+  IStockInfoResponse,
+  IStockLookupResponse,
+} from '../models/stock-card';
 
 @Injectable()
 export class StockService {
   constructor(private http: HttpClient) {}
 
-  getStockInfo(symbol: string) {
-    return this.http.get(`${env.baseUrl}quote`, {
+  getStockInfo(symbol: string): Observable<IStockInfoResponse> {
+    return this.http.get<IStockInfoResponse>(`${env.baseUrl}quote`, {
       params: { symbol, token: env.apiKey },
     });
   }
 
-  getStockName(symbol: string) {
-    return this.http.get(`${env.baseUrl}search`, {
+  getStockName(symbol: string): Observable<IStockLookupResponse> {
+    return this.http.get<IStockLookupResponse>(`${env.baseUrl}search`, {
       params: { q: symbol, token: env.apiKey },
     });
   }
@@ -26,7 +30,8 @@ export class StockService {
       info: this.getStockInfo(symbol),
       name: this.getStockName(symbol),
     }).pipe(
-      map((data: any) => {
+      map((data) => {
+        console.log(data);
         const foundLookup = data.name.result.find(
           (item) => item.symbol === symbol
         );
