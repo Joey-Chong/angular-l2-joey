@@ -4,5 +4,10 @@
 </form>
 
 <div *ngFor="let stock of stockList">
-  <h1>{{ stock }}</h1>
+  <span>{{ stock.name }}</span>
+  <span>{{ stock.symbol }}</span>
+  <p>Changed today: {{ stock.changeToday }}</p>
+  <p>Current price: {{ stock.currentPrice }}</p>
+  <p>Opening price: {{ stock.openingPrice }}</p>
+  <p>High price: {{ stock.highPrice }}</p>
 </div>
