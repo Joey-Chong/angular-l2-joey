@@ -3,7 +3,7 @@
   <button id="trackBtn" type="submit">Track Stock</button>
 </form>
 
-<div *ngFor="let stock of stockList">
+<div *ngFor="let stock of stockCards">
   <span>{{ stock.name }}</span>
   <span>{{ stock.symbol }}</span>
   <p>Changed today: {{ stock.changeToday }}</p>
