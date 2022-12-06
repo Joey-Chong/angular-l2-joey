@@ -13,6 +13,7 @@ import {
 export class StockService {
   constructor(private http: HttpClient) {}
 
+  //TODO: error handling
   getStockInfo(symbol: string): Observable<IStockInfoResponse> {
     return this.http.get<IStockInfoResponse>(`${env.baseUrl}quote`, {
       params: { symbol, token: env.apiKey },

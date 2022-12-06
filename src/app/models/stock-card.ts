@@ -1,6 +1,6 @@
 export interface IStockCard {
-  name: string;
-  symbol: string;
+  name: string; //description
+  symbol: string; //symbol
   changeToday: number; // dp
   currentPrice: number; // c
   openingPrice: number; // o
@@ -25,5 +25,5 @@ export interface IStockLookupResponse {
     displaySymbol: string;
     symbol: string;
     type: string;
-  }[]
+  }[];
 }

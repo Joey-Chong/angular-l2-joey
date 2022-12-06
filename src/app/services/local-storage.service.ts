@@ -9,7 +9,7 @@ export class LocalStorageService {
       localStorage.getItem('stockSymbols')
     );
     if (stockSymbols) {
-      stockSymbols.push(symbol);
+      if (!this.isDuplicate(symbol)) stockSymbols.push(symbol);
       localStorage.setItem('stockSymbols', JSON.stringify(stockSymbols));
     } else {
       localStorage.setItem('stockSymbols', JSON.stringify([symbol]));
@@ -30,5 +30,12 @@ export class LocalStorageService {
 
   getStockList() {
     return JSON.parse(localStorage.getItem('stockSymbols'));
+  }
+
+  isDuplicate(symbol: string): boolean {
+    const stockSymbols: string[] = JSON.parse(
+      localStorage.getItem('stockSymbols')
+    );
+    return stockSymbols.indexOf(symbol) !== -1;
   }
 }

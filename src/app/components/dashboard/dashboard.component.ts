@@ -15,7 +15,7 @@ export class DashboardComponent implements OnInit {
   private unsub$ = new Subject<void>();
 
   stockCards: IStockCard[] = [];
-  stockList: string[] = [];
+  localStockList: string[] = [];
 
   constructor(
     private localStorageService: LocalStorageService,
@@ -23,21 +23,24 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.stockList = this.localStorageService.getStockList();
-    if (this.stockList) {
-      this.stockList.forEach((symbol: string) => {
+    this.localStockList = this.localStorageService.getStockList();
+    if (this.localStockList) {
+      this.localStockList.forEach((symbol: string) => {
         this.addStockCard(symbol);
       });
     }
   }
 
   onSubmit(form: NgForm) {
-    this.localStorageService.addStock(form.value.stockSymbol);
-    this.addStockCard(form.value.stockSymbol);
+    const formValue = form.value.stockSymbol.toUpperCase();
+    this.localStorageService.addStock(formValue);
+    if (!this.localStorageService.isDuplicate(formValue))
+      this.addStockCard(formValue);
     form.resetForm();
   }
 
   //TODO: check duplicates
+  //TODO: pipe the values
   addStockCard(symbol: string) {
     this.stockService
       .getCardInfo(symbol)
