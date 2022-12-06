@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { forkJoin } from 'rxjs';
 import { env } from '../environment';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
+import { IStockCard } from '../models/stock-card';
 
 @Injectable()
 export class StockService {
@@ -24,6 +25,20 @@ export class StockService {
     return forkJoin({
       info: this.getStockInfo(symbol),
       name: this.getStockName(symbol),
-    });
+    }).pipe(
+      map((data: any) => {
+        const foundLookup = data.name.result.find(
+          (item) => item.symbol === symbol
+        );
+        return <IStockCard>{
+          name: foundLookup.description,
+          symbol: foundLookup.symbol,
+          changeToday: data.info.dp,
+          currentPrice: data.info.c,
+          openingPrice: data.info.o,
+          highPrice: data.info.h,
+        };
+      })
+    );
   }
 }

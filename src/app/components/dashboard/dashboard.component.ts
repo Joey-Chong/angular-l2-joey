@@ -26,27 +26,34 @@ export class DashboardComponent implements OnInit {
     this.stockList = this.localStorageService.getStockList();
     if (this.stockList) {
       this.stockList.forEach((symbol: string) => {
-        // this.getStockInfo(symbol);
+        this.addStockCard(symbol);
       });
     }
   }
 
   onSubmit(form: NgForm) {
     this.localStorageService.addStock(form.value.stockSymbol);
-    // this.getStockInfo(form.value.stockSymbol);
+    this.addStockCard(form.value.stockSymbol);
     form.resetForm();
   }
 
-  getStockInfo(symbol: string) {
+  //TODO: check duplicates
+  addStockCard(symbol: string) {
     this.stockService
       .getCardInfo(symbol)
       .pipe(
-        tap((data) => {
+        tap((data: IStockCard) => {
           console.log(data);
+          this.stockCards.push(data);
         }),
         takeUntil(this.unsub$)
       )
       .subscribe();
+  }
+
+  removeStockCard(symbol: string) {
+    this.stockCards = this.stockCards.filter((item) => item.symbol !== symbol);
+    this.localStorageService.removeStock(symbol);
   }
 
   ngOnDestroy() {
