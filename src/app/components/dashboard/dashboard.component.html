@@ -11,5 +11,8 @@
   <p>Opening price: {{ stock.openingPrice | currency }}</p>
   <p>High price: {{ stock.highPrice | currency }}</p>
   <button (click)="removeStockCard(stock.symbol)">X</button>
-  <br /><a routerLink="/sentiment" routerLinkActive="active">Sentiment</a>
+  <br />
+  <a routerLink="/sentiment/{{ stock.symbol }}" routerLinkActive="active"
+    >Sentiment</a
+  >
 </div>

@@ -9,7 +9,7 @@ const routes: Routes = [
     component: DashboardComponent,
   },
   {
-    path: 'sentiment',
+    path: 'sentiment/:symbol',
     component: SentimentComponent,
   },
   {
