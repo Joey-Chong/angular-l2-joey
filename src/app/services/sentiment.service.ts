@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { forkJoin, map, Observable } from 'rxjs';
+import { catchError, forkJoin, map, Observable, of } from 'rxjs';
 import { env } from '../environment';
 import { ISentimentCard, ISentimentResponse } from '../models/sentiment-card';
 import { IStockLookupResponse } from '../models/stock-card';
@@ -50,6 +50,10 @@ export class SentimentService {
           symbol: data.sentiment.symbol,
           monthly: this.prepareMonthlyDate(data.sentiment.data),
         };
+      }),
+      catchError((err: HttpErrorResponse) => {
+        console.error(err.message);
+        return of(null);
       })
     );
   }

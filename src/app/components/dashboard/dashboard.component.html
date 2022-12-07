@@ -1,7 +1,8 @@
 <form #stockForm="ngForm" (ngSubmit)="onSubmit(stockForm)">
   <input id="stockInput" name="stockSymbol" ngModel />
   <button id="trackBtn" type="submit">Track Stock</button>
-  <span *ngIf="notFound">Stock symbol not found, try again!</span>
+  <span *ngIf="errorMsg">{{ errorMsg }}</span>
+  <span *ngIf="isLoading">Loading...</span>
 </form>
 
 <div *ngFor="let stock of stockCards">

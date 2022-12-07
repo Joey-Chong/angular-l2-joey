@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { env } from '../environment';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import {
   IStockCard,
   IStockInfoResponse,
@@ -45,6 +45,10 @@ export class StockService {
           highPrice: data.info.h,
           trendIcon: getTrendIcon(data.info.dp),
         };
+      }),
+      catchError((err: HttpErrorResponse) => {
+        console.error(err.message);
+        return of(null);
       })
     );
   }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { tap, takeUntil } from 'rxjs/operators';
+import { ErrorMessage } from '../../models/error-message.enum';
 import { IStockCard } from '../../models/stock-card';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { StockService } from '../../services/stock.service';
@@ -13,7 +14,8 @@ import { StockService } from '../../services/stock.service';
 })
 export class DashboardComponent implements OnInit {
   private unsub$ = new Subject<void>();
-  notFound = false;
+  errorMsg: ErrorMessage = null;
+  isLoading = false;
 
   stockCards: IStockCard[] = [];
   localStockList: string[] = [];
@@ -24,6 +26,7 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.isLoading = true;
     this.localStockList = this.localStorageService.getStockList();
     if (this.localStockList) {
       this.localStockList.forEach((symbol: string) => {
@@ -33,6 +36,7 @@ export class DashboardComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
+    this.isLoading = true;
     const formValue = form.value.stockSymbol.toUpperCase();
     // check duplicate first then add to local storage
     if (!this.localStorageService.isDuplicate(formValue))
@@ -48,11 +52,15 @@ export class DashboardComponent implements OnInit {
         tap((data: IStockCard) => {
           if (data?.name) {
             this.stockCards.push(data);
-            this.notFound = false;
+            this.errorMsg = null;
+          } else if (data !== null) {
+            this.errorMsg = ErrorMessage.notFound;
+            this.localStorageService.removeStock(symbol);
           } else {
-            this.notFound = true;
+            this.errorMsg = ErrorMessage.httpError;
             this.localStorageService.removeStock(symbol);
           }
+          this.isLoading = false;
         }),
         takeUntil(this.unsub$)
       )

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
+import { ErrorMessage } from '../../models/error-message.enum';
 import { ISentimentCard } from '../../models/sentiment-card';
 import { SentimentService } from '../../services/sentiment.service';
 
@@ -12,7 +13,8 @@ import { SentimentService } from '../../services/sentiment.service';
 })
 export class SentimentComponent implements OnInit {
   private unsub$ = new Subject<void>();
-  notFound = false;
+  errorMsg: ErrorMessage = null;
+  isLoading = false;
 
   sentimentCard: ISentimentCard;
 
@@ -22,6 +24,7 @@ export class SentimentComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.isLoading = true;
     const symbol = this.activatedRoute.snapshot.params.symbol;
     this.getSentimentCard(symbol);
   }
@@ -32,13 +35,17 @@ export class SentimentComponent implements OnInit {
       .pipe(
         tap((data: ISentimentCard) => {
           console.log(data);
-          if (data.name) {
+          if (data?.name) {
             this.sentimentCard = data;
-            this.notFound = false;
+            this.errorMsg = null;
+          } else if (data !== null) {
+            this.sentimentCard = null;
+            this.errorMsg = ErrorMessage.notFound;
           } else {
             this.sentimentCard = null;
-            this.notFound = true;
+            this.errorMsg = ErrorMessage.httpError;
           }
+          this.isLoading = false;
         }),
         takeUntil(this.unsub$)
       )

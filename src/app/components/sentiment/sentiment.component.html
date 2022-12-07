@@ -7,8 +7,10 @@
   </div>
 </div>
 
-<div *ngIf="notFound">
-  <p>Symbol not found!</p>
+<p *ngIf="isLoading">Loading...</p>
+
+<div *ngIf="errorMsg">
+  <p>{{ errorMsg }}</p>
 </div>
 
 <a id="backBtn" routerLink="/" routerLinkActive="active"
