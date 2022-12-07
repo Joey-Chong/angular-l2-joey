@@ -7,13 +7,26 @@ import { IStockLookupResponse } from '../models/stock-card';
 
 @Injectable()
 export class SentimentService {
-
   constructor(private http: HttpClient) {}
 
   getSentiment(symbol: string): Observable<ISentimentResponse> {
-    return this.http.get<ISentimentResponse>(`${env.baseUrl}insider-sentiment`, {
-      params: { symbol, token: env.apiKey },
-    });
+    const date = new Date();
+    // using en-CA to get the format we need
+    const to = new Date(date.getFullYear(), date.getMonth()).toLocaleDateString(
+      'en-CA'
+    );
+    const from = new Date(
+      date.getFullYear(),
+      date.getMonth() - 2
+    ).toLocaleDateString('en-CA');
+    console.log(from);
+    console.log(to);
+    return this.http.get<ISentimentResponse>(
+      `${env.baseUrl}stock/insider-sentiment`,
+      {
+        params: { symbol, token: env.apiKey, from, to },
+      }
+    );
   }
 
   getStockName(symbol: string): Observable<IStockLookupResponse> {
@@ -35,15 +48,22 @@ export class SentimentService {
         return <ISentimentCard>{
           name: foundLookup.description,
           symbol: data.sentiment.symbol,
-          monthly: data.sentiment.data.map(({symbol, ...data}) => {
-            return {
-              trendIcon: this.getTrendIcon(data.change),
-              ...data
-            }
-          })
+          monthly: this.prepareMonthlyDate(data.sentiment.data),
         };
       })
     );
+  }
+
+  prepareMonthlyDate(sentimentData) {
+    const monthlyData = sentimentData.map(({ symbol, ...data }) => {
+      return {
+        trendIcon: this.getTrendIcon(data.change),
+        ...data,
+      };
+    });
+    // ascending order, making sure data is in order
+    console.log(monthlyData.sort((a, b) => a - b));
+    return monthlyData.sort((a, b) => a - b);
   }
 
   getTrendIcon(value: number) {
