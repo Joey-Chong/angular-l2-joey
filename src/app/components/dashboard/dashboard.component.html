@@ -10,9 +10,17 @@
   <p>Current price: {{ stock.currentPrice | currency }}</p>
   <p>Opening price: {{ stock.openingPrice | currency }}</p>
   <p>High price: {{ stock.highPrice | currency }}</p>
-  <button (click)="removeStockCard(stock.symbol)">X</button>
+  <button
+    [attr.id]="'remove' + stock.symbol"
+    (click)="removeStockCard(stock.symbol)"
+  >
+    X
+  </button>
   <br />
-  <a routerLink="/sentiment/{{ stock.symbol }}" routerLinkActive="active"
+  <a
+    [attr.id]="'sentiment' + stock.symbol"
+    routerLink="/sentiment/{{ stock.symbol }}"
+    routerLinkActive="active"
     >Sentiment</a
   >
 </div>
