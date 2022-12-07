@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
 import { env } from '../environment';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import {
   IStockCard,
   IStockInfoResponse,
   IStockLookupResponse,
 } from '../models/stock-card';
+import { getTrendIcon } from '../utils/trend-icon';
 
 @Injectable()
 export class StockService {
@@ -32,26 +33,19 @@ export class StockService {
       name: this.getStockName(symbol),
     }).pipe(
       map((data) => {
-        console.log(data);
         const foundLookup = data.name.result.find(
           (item) => item.symbol === symbol
         );
         return <IStockCard>{
-          name: foundLookup.description,
-          symbol: foundLookup.symbol,
+          name: foundLookup?.description ?? null,
+          symbol: foundLookup?.symbol ?? null,
           changeToday: data.info.dp / 100,
           currentPrice: data.info.c,
           openingPrice: data.info.o,
           highPrice: data.info.h,
-          trendIcon: this.getTrendIcon(data.info.dp)
+          trendIcon: getTrendIcon(data.info.dp),
         };
       })
     );
-  }
-
-  getTrendIcon(percent: number) {
-    if (percent < 0) return '🡻';
-    if (percent > 0) return '🡹';
-    else return '-';
   }
 }

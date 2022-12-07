@@ -13,6 +13,7 @@ import { StockService } from '../../services/stock.service';
 })
 export class DashboardComponent implements OnInit {
   private unsub$ = new Subject<void>();
+  notFound = false;
 
   stockCards: IStockCard[] = [];
   localStockList: string[] = [];
@@ -40,15 +41,18 @@ export class DashboardComponent implements OnInit {
     form.resetForm();
   }
 
-  //TODO: check duplicates
-  //TODO: pipe the values
   addStockCard(symbol: string) {
     this.stockService
       .getCardInfo(symbol)
       .pipe(
         tap((data: IStockCard) => {
-          console.log(data);
-          this.stockCards.push(data);
+          if (data?.name) {
+            this.stockCards.push(data);
+            this.notFound = false;
+          } else {
+            this.notFound = true;
+            this.localStorageService.removeStock(symbol);
+          }
         }),
         takeUntil(this.unsub$)
       )

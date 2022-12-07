@@ -4,6 +4,7 @@ import { forkJoin, map, Observable } from 'rxjs';
 import { env } from '../environment';
 import { ISentimentCard, ISentimentResponse } from '../models/sentiment-card';
 import { IStockLookupResponse } from '../models/stock-card';
+import { getTrendIcon } from '../utils/trend-icon';
 
 @Injectable()
 export class SentimentService {
@@ -56,17 +57,11 @@ export class SentimentService {
   prepareMonthlyDate(sentimentData) {
     const monthlyData = sentimentData.map(({ symbol, ...data }) => {
       return {
-        trendIcon: this.getTrendIcon(data.change),
+        trendIcon: getTrendIcon(data.change),
         ...data,
       };
     });
     // ascending order, making sure data is in order
     return monthlyData.sort((a, b) => a - b);
-  }
-
-  getTrendIcon(value: number) {
-    if (value < 0) return '🡻';
-    if (value > 0) return '🡹';
-    else return '-';
   }
 }
