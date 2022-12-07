@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { forkJoin, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { tap, takeUntil } from 'rxjs/operators';
 import { IStockCard } from '../../models/stock-card';
 import { LocalStorageService } from '../../services/local-storage.service';

@@ -9,11 +9,12 @@ import { LocalStorageService } from './services/local-storage.service';
 import { StockService } from './services/stock.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
+import { SentimentService } from './services/sentiment.service';
 
 @NgModule({
   imports: [BrowserModule, FormsModule, HttpClientModule, AppRoutingModule],
   declarations: [AppComponent, DashboardComponent, SentimentComponent],
-  providers: [LocalStorageService, StockService],
+  providers: [LocalStorageService, StockService, SentimentService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
