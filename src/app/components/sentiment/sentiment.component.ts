@@ -22,7 +22,7 @@ export class SentimentComponent implements OnInit {
 
   ngOnInit() {
     const symbol = this.activatedRoute.snapshot.params.symbol;
-    // this.getSentimentCard(symbol);
+    this.getSentimentCard(symbol);
   }
 
   getSentimentCard(symbol: string) {
@@ -30,6 +30,7 @@ export class SentimentComponent implements OnInit {
       .getCardInfo(symbol)
       .pipe(
         tap((data: ISentimentCard) => {
+          console.log(data);
           this.sentimentCard = data;
         }),
         takeUntil(this.unsub$)

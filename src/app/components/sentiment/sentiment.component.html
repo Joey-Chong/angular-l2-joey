@@ -1,8 +1,12 @@
 <div *ngIf="sentimentCard">
   <h1>{{ sentimentCard.name }}</h1>
   <h3>({{ sentimentCard.symbol }})</h3>
-  <!-- <p>Change: {{ sentimentCard.change }}</p>
-<p>MSPR: {{ sentimentCard.mspr }}</p> -->
+  <div *ngFor="let month of sentimentCard.monthly">
+    <p>{{ month.change }} {{ month.trendIcon }}</p>
+    <p>{{ month.mspr }}</p>
+  </div>
 </div>
 
-<a routerLink="/" routerLinkActive="active">Back</a>
+<a id="backBtn" routerLink="/" routerLinkActive="active"
+  >Back to list of stocks</a
+>

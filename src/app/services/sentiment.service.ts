@@ -41,7 +41,6 @@ export class SentimentService {
       name: this.getStockName(symbol),
     }).pipe(
       map((data) => {
-        console.log(data);
         const foundLookup = data.name.result.find(
           (item) => item.symbol === symbol
         );
@@ -62,7 +61,6 @@ export class SentimentService {
       };
     });
     // ascending order, making sure data is in order
-    console.log(monthlyData.sort((a, b) => a - b));
     return monthlyData.sort((a, b) => a - b);
   }
 
