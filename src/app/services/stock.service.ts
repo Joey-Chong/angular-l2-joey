@@ -39,12 +39,19 @@ export class StockService {
         return <IStockCard>{
           name: foundLookup.description,
           symbol: foundLookup.symbol,
-          changeToday: data.info.dp,
+          changeToday: data.info.dp / 100,
           currentPrice: data.info.c,
           openingPrice: data.info.o,
           highPrice: data.info.h,
+          trendIcon: this.getTrendIcon(data.info.dp)
         };
       })
     );
+  }
+
+  getTrendIcon(percent: number) {
+    if (percent < 0) return '🡻';
+    if (percent > 0) return '🡹';
+    else return '-';
   }
 }

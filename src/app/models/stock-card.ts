@@ -5,6 +5,7 @@ export interface IStockCard {
   currentPrice: number; // c
   openingPrice: number; // o
   highPrice: number; // h
+  trendIcon: '🡻' | '🡹' | '-';
 }
 
 export interface IStockInfoResponse {
