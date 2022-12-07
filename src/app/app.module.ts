@@ -8,9 +8,10 @@ import { SentimentComponent } from './components/sentiment/sentiment.component';
 import { LocalStorageService } from './services/local-storage.service';
 import { StockService } from './services/stock.service';
 import { HttpClientModule } from '@angular/common/http';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
-  imports: [BrowserModule, FormsModule, HttpClientModule],
+  imports: [BrowserModule, FormsModule, HttpClientModule, AppRoutingModule],
   declarations: [AppComponent, DashboardComponent, SentimentComponent],
   providers: [LocalStorageService, StockService],
   bootstrap: [AppComponent],
