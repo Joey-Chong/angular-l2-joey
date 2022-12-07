@@ -46,7 +46,7 @@ export class SentimentService {
           (item) => item.symbol === symbol
         );
         return <ISentimentCard>{
-          name: foundLookup.description,
+          name: foundLookup?.description ?? null,
           symbol: data.sentiment.symbol,
           monthly: this.prepareMonthlyDate(data.sentiment.data),
         };

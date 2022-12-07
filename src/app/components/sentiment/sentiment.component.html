@@ -7,6 +7,10 @@
   </div>
 </div>
 
+<div *ngIf="notFound">
+  <p>Symbol not found!</p>
+</div>
+
 <a id="backBtn" routerLink="/" routerLinkActive="active"
   >Back to list of stocks</a
 >

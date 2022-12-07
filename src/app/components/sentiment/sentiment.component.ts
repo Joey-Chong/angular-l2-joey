@@ -12,6 +12,7 @@ import { SentimentService } from '../../services/sentiment.service';
 })
 export class SentimentComponent implements OnInit {
   private unsub$ = new Subject<void>();
+  notFound = false;
 
   sentimentCard: ISentimentCard;
 
@@ -31,7 +32,13 @@ export class SentimentComponent implements OnInit {
       .pipe(
         tap((data: ISentimentCard) => {
           console.log(data);
-          this.sentimentCard = data;
+          if (data.name) {
+            this.sentimentCard = data;
+            this.notFound = false;
+          } else {
+            this.sentimentCard = null;
+            this.notFound = true;
+          }
         }),
         takeUntil(this.unsub$)
       )
