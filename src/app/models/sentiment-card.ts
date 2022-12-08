@@ -2,7 +2,7 @@ export interface ISentimentCard {
   name: string;
   symbol: string;
   monthly: {
-    trendIcon: '🡻' | '🡹' | '⥮';
+    trendIcon: '⤴' | '⤵' | '⥮';
     change: number;
     month: number;
     mspr: number;
