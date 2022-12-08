@@ -4,9 +4,8 @@ export interface ISentimentCard {
   monthly: {
     trendIcon: '&#129145;' | '&#129147;' | '&#8645;';
     change: number;
-    month: number;
     mspr: number;
-    year: number;
+    fullDate: Date;
   }[];
 }
 

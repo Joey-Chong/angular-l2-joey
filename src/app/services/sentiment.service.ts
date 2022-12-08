@@ -10,24 +10,25 @@ import { getTrendIcon } from '../utils/trend-icon';
 export class SentimentService {
   constructor(private http: HttpClient) {}
 
-  getSentiment(symbol: string): Observable<ISentimentResponse> {
+  dateRange = {
+    fromDate: null,
+    toDate: null,
+  };
+
+  getSentiment(symbol: string, date: Date): Observable<ISentimentResponse> {
     // endpoint doesn't cross year?
-    const date = new Date();
-    console.log(date);
+    this.dateRange.toDate = new Date(date.getFullYear(), date.getMonth());
+    this.dateRange.fromDate = new Date(date.getFullYear(), date.getMonth() - 2);
     // using en-CA to get the format we need
-    const to = new Date(date.getFullYear(), date.getMonth()).toLocaleDateString(
-      'en-CA'
-    );
-    const from = new Date(
-      date.getFullYear(),
-      date.getMonth() - 2
-    ).toLocaleDateString('en-CA');
-    console.log(from);
-    console.log(to);
     return this.http.get<ISentimentResponse>(
       `${env.baseUrl}stock/insider-sentiment`,
       {
-        params: { symbol, token: env.apiKey, from, to },
+        params: {
+          symbol,
+          token: env.apiKey,
+          from: this.dateRange.fromDate.toLocaleDateString('en-CA'),
+          to: this.dateRange.toDate.toLocaleDateString('en-CA'),
+        },
       }
     );
   }
@@ -38,9 +39,9 @@ export class SentimentService {
     });
   }
 
-  getCardInfo(symbol: string) {
+  getCardInfo(symbol: string, date: Date) {
     return forkJoin({
-      sentiment: this.getSentiment(symbol),
+      sentiment: this.getSentiment(symbol, date),
       name: this.getStockName(symbol),
     }).pipe(
       map((data) => {
@@ -61,13 +62,14 @@ export class SentimentService {
   }
 
   prepareMonthlyDate(sentimentData) {
-    const monthlyData = sentimentData.map(({ symbol, ...data }) => {
+    // ascending order, making sure data is in order
+    let monthlyData = sentimentData.sort((a, b) => a.month - b.month);
+    return monthlyData.map(({ symbol, ...data }) => {
       return {
         trendIcon: getTrendIcon(data.change),
+        fullDate: new Date(data.year, data.month - 1),
         ...data,
       };
     });
-    // ascending order, making sure data is in order
-    return monthlyData.sort((a, b) => a.month - b.month);
   }
 }

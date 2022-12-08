@@ -1,8 +1,13 @@
 <div class="card" *ngIf="sentimentCard">
   <h1>{{ sentimentCard.name }} ({{ sentimentCard.symbol }})</h1>
+  <h3>
+    {{ dateRange.fromDate | date: 'MMMM y' }} -
+    {{ dateRange.toDate | date: 'MMMM y' }}
+  </h3>
   <div class="monthly">
+    <div *ngIf="sentimentCard.monthly.length === 0">No Data</div>
     <div *ngFor="let month of sentimentCard.monthly">
-      <p>{{ getMonthName(month.month) }} {{ month.year }}</p>
+      <h3>{{ month.fullDate | date: 'MMMM y' }}</h3>
       <p>
         <b>Change:</b> {{ month.change }}
         <span

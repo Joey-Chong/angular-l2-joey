@@ -17,6 +17,7 @@ export class SentimentComponent implements OnInit {
   isLoading = false;
 
   sentimentCard: ISentimentCard;
+  dateRange = this.sentimentService.dateRange;
 
   constructor(
     private sentimentService: SentimentService,
@@ -30,8 +31,9 @@ export class SentimentComponent implements OnInit {
   }
 
   getSentimentCard(symbol: string) {
+    const date = new Date();
     this.sentimentService
-      .getCardInfo(symbol)
+      .getCardInfo(symbol, date)
       .pipe(
         tap((data: ISentimentCard) => {
           console.log(data);
