@@ -38,12 +38,15 @@ export class DashboardComponent implements OnInit {
   onSubmit(form: NgForm) {
     this.errorMsg = null;
     if (form.value.stockSymbol) {
-      this.isLoading = true;
       const formValue = form.value.stockSymbol.toUpperCase();
       // check duplicate first then add to local storage
-      if (!this.localStorageService.isDuplicate(formValue))
+      if (!this.localStorageService.isDuplicate(formValue)) {
+        this.isLoading = true;
         this.addStockCard(formValue);
-      this.localStorageService.addStock(formValue);
+        this.localStorageService.addStock(formValue);
+      } else {
+        this.errorMsg = ErrorMessage.duplicate;
+      }
       form.resetForm();
     } else {
       this.errorMsg = ErrorMessage.emptySymbol;
