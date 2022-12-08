@@ -1,0 +1,90 @@
+.search {
+  &__wrapper {
+    min-width: 400px;
+    width: 100%;
+    height: 100px;
+    border: solid black;
+  }
+
+  &__container {
+    width: 100%;
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__message {
+      width: 100%;
+      height: 30%;
+      text-align: center;
+    }
+
+    > form {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+
+      > input {
+        width: 200px;
+        border: solid 2px #41403e;
+        align-self: center;
+        background: white;
+        padding: 8px;
+        transition: all 0.5s ease;
+        color: #41403e;
+        font-size: 14px;
+        outline: none;
+        box-shadow: 20px 38px 34px -26px hsla(0, 0%, 0%, 0.2);
+        border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+      }
+    }
+  }
+}
+
+.card {
+  min-width: 400px;
+  position: relative;
+  margin: 12px auto;
+  border: solid 4px #41403e;
+  align-self: center;
+  background: white;
+  padding: 12px 24px;
+  transition: all 0.5s ease;
+  outline: none;
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+
+  & > .close {
+    position: absolute;
+    right: 24px;
+    top: 24px;
+  }
+
+  & > .sentiment {
+    position: absolute;
+    right: 24px;
+    bottom: 24px;
+
+    & > a {
+      text-decoration: none;
+      color: #41403e;
+    }
+  }
+}
+
+.button {
+  border: solid 2px #41403e;
+  align-self: center;
+  background: white;
+  padding: 8px;
+  transition: all 0.5s ease;
+  color: #41403e;
+  font-size: 14px;
+  outline: none;
+  box-shadow: 20px 38px 34px -26px hsla(0, 0%, 0%, 0.2);
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+
+  &:hover {
+    box-shadow: 2px 8px 4px -6px hsla(0, 0%, 0%, 0.3);
+  }
+}

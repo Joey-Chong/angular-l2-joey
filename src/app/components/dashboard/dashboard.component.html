@@ -1,28 +1,39 @@
-<form #stockForm="ngForm" (ngSubmit)="onSubmit(stockForm)">
-  <input id="stockInput" name="stockSymbol" ngModel />
-  <button id="trackBtn" type="submit">Track Stock</button>
-  <span *ngIf="errorMsg">{{ errorMsg }}</span>
-  <span *ngIf="isLoading">Loading...</span>
-</form>
+<div class="search__wrapper">
+  <div class="search__container">
+    <form #stockForm="ngForm" (ngSubmit)="onSubmit(stockForm)">
+      <input
+        id="stockInput"
+        name="stockSymbol"
+        placeholder="Enter symbol"
+        ngModel
+      />
+      <button class="button" id="trackBtn" type="submit">Track Stock</button>
+    </form>
+  </div>
+  <div class="search__container__message" *ngIf="isLoading">Loading...</div>
+  <div class="search__container__message" *ngIf="errorMsg">{{ errorMsg }}</div>
+</div>
 
-<div *ngFor="let stock of stockCards">
-  <h1>{{ stock.name }}</h1>
-  <h3>({{ stock.symbol }}) {{ stock.trendIcon }}</h3>
-  <p>Changed today: {{ stock.changeToday | percent: '0.1-4' }}</p>
-  <p>Current price: {{ stock.currentPrice | currency }}</p>
-  <p>Opening price: {{ stock.openingPrice | currency }}</p>
-  <p>High price: {{ stock.highPrice | currency }}</p>
+<div class="card" *ngFor="let stock of stockCards">
+  <h1>{{ stock.name }} ({{ stock.symbol }})</h1>
+  <h3>{{ stock.trendIcon }}</h3>
+  <p><b>Changed today:</b> {{ stock.changeToday | percent: '0.1-4' }}</p>
+  <p><b>Current price:</b> {{ stock.currentPrice | currency }}</p>
+  <p><b>Opening price:</b> {{ stock.openingPrice | currency }}</p>
+  <p><b>High price:</b> {{ stock.highPrice | currency }}</p>
   <button
+    class="button close"
     [attr.id]="'remove' + stock.symbol"
     (click)="removeStockCard(stock.symbol)"
   >
     X
   </button>
-  <br />
-  <a
-    [attr.id]="'sentiment' + stock.symbol"
-    routerLink="/sentiment/{{ stock.symbol }}"
-    routerLinkActive="active"
-    >See Sentiment Details</a
-  >
+  <button class="button sentiment">
+    <a
+      [attr.id]="'sentiment' + stock.symbol"
+      routerLink="/sentiment/{{ stock.symbol }}"
+      routerLinkActive="active"
+      >See sentiment details</a
+    >
+  </button>
 </div>

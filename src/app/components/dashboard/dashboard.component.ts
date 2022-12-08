@@ -10,7 +10,7 @@ import { StockService } from '../../services/stock.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css'],
+  styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
   private unsub$ = new Subject<void>();
@@ -27,7 +27,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.localStockList = this.localStorageService.getStockList();
-    if (this.localStockList) {
+    if (this.localStockList && this.localStockList.length > 0) {
       this.isLoading = true;
       this.localStockList.forEach((symbol: string) => {
         this.addStockCard(symbol);
