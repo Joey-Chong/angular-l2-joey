@@ -16,7 +16,12 @@
 
 <div class="card" *ngFor="let stock of stockCards">
   <h1>{{ stock.name }} ({{ stock.symbol }})</h1>
-  <h3>{{ stock.trendIcon }}</h3>
+  <h3
+    class="trend-icon"
+    [innerHtml]="stock.trendIcon"
+    [class.red]="stock.changeToday < 0"
+    [class.green]="stock.changeToday > 0"
+  ></h3>
   <p><b>Changed today:</b> {{ stock.changeToday | percent: '0.1-4' }}</p>
   <p><b>Current price:</b> {{ stock.currentPrice | currency }}</p>
   <p><b>Opening price:</b> {{ stock.openingPrice | currency }}</p>

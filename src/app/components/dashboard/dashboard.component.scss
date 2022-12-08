@@ -70,6 +70,22 @@
       color: #41403e;
     }
   }
+
+  & > .trend-icon {
+    top: 25%;
+    right: 10%;
+    margin: auto;
+    position: absolute;
+    font-size: 80px;
+  }
+
+  & > .green {
+    color: green;
+  }
+
+  & > .red {
+    color: red;
+  }
 }
 
 .button {
