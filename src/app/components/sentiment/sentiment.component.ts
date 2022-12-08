@@ -36,7 +36,6 @@ export class SentimentComponent implements OnInit {
       .getCardInfo(symbol, date)
       .pipe(
         tap((data: ISentimentCard) => {
-          console.log(data);
           if (data?.name) {
             this.sentimentCard = data;
             this.errorMsg = null;
