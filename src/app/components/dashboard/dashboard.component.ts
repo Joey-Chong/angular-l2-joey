@@ -26,9 +26,9 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.isLoading = true;
     this.localStockList = this.localStorageService.getStockList();
     if (this.localStockList) {
+      this.isLoading = true;
       this.localStockList.forEach((symbol: string) => {
         this.addStockCard(symbol);
       });
