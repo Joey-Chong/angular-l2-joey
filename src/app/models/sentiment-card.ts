@@ -19,3 +19,8 @@ export interface ISentimentResponse {
   }[];
   symbol: string;
 }
+
+export interface IDateRange {
+  fromDate: Date;
+  toDate: Date
+}

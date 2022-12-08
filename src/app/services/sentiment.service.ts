@@ -2,7 +2,11 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, forkJoin, map, Observable, of } from 'rxjs';
 import { env } from '../environment';
-import { ISentimentCard, ISentimentResponse } from '../models/sentiment-card';
+import {
+  IDateRange,
+  ISentimentCard,
+  ISentimentResponse,
+} from '../models/sentiment-card';
 import { IStockLookupResponse } from '../models/stock-card';
 import { getTrendIcon } from '../utils/trend-icon';
 
@@ -10,7 +14,7 @@ import { getTrendIcon } from '../utils/trend-icon';
 export class SentimentService {
   constructor(private http: HttpClient) {}
 
-  dateRange = {
+  dateRange: IDateRange = {
     fromDate: null,
     toDate: null,
   };
@@ -39,7 +43,7 @@ export class SentimentService {
     });
   }
 
-  getCardInfo(symbol: string, date: Date) {
+  getCardInfo(symbol: string, date: Date): Observable<ISentimentCard> {
     return forkJoin({
       sentiment: this.getSentiment(symbol, date),
       name: this.getStockName(symbol),
@@ -61,7 +65,7 @@ export class SentimentService {
     );
   }
 
-  prepareMonthlyDate(sentimentData) {
+  prepareMonthlyDate(sentimentData): ISentimentCard['monthly'] {
     // ascending order, making sure data is in order
     let monthlyData = sentimentData.sort((a, b) => a.month - b.month);
     return monthlyData.map(({ symbol, ...data }) => {

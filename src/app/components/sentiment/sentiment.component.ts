@@ -24,13 +24,13 @@ export class SentimentComponent implements OnInit {
     private activatedRoute: ActivatedRoute
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.isLoading = true;
     const symbol = this.activatedRoute.snapshot.params.symbol;
     this.getSentimentCard(symbol);
   }
 
-  getSentimentCard(symbol: string) {
+  getSentimentCard(symbol: string): void {
     const date = new Date();
     this.sentimentService
       .getCardInfo(symbol, date)
@@ -53,15 +53,8 @@ export class SentimentComponent implements OnInit {
       .subscribe();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.unsub$.next();
     this.unsub$.complete();
-  }
-
-  getMonthName(monthNumber) {
-    const date = new Date();
-    date.setMonth(monthNumber - 1);
-
-    return date.toLocaleString('en-US', { month: 'long' });
   }
 }

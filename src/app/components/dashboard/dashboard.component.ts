@@ -25,7 +25,7 @@ export class DashboardComponent implements OnInit {
     private stockService: StockService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.localStockList = this.localStorageService.getStockList();
     if (this.localStockList && this.localStockList.length > 0) {
       this.isLoading = true;
@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  onSubmit(form: NgForm) {
+  onSubmit(form: NgForm): void {
     this.errorMsg = null;
     if (form.value.stockSymbol) {
       const formValue = form.value.stockSymbol.toUpperCase();
@@ -53,7 +53,7 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  addStockCard(symbol: string) {
+  addStockCard(symbol: string): void {
     this.stockService
       .getCardInfo(symbol)
       .pipe(
@@ -75,12 +75,12 @@ export class DashboardComponent implements OnInit {
       .subscribe();
   }
 
-  removeStockCard(symbol: string) {
+  removeStockCard(symbol: string): void {
     this.stockCards = this.stockCards.filter((item) => item.symbol !== symbol);
     this.localStorageService.removeStock(symbol);
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.unsub$.next();
     this.unsub$.complete();
   }

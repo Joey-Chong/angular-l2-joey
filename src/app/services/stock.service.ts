@@ -27,7 +27,7 @@ export class StockService {
     });
   }
 
-  getCardInfo(symbol: string) {
+  getCardInfo(symbol: string): Observable<IStockCard> {
     return forkJoin({
       info: this.getStockInfo(symbol),
       name: this.getStockName(symbol),

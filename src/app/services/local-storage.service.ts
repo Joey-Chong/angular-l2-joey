@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 export class LocalStorageService {
   constructor() {}
 
-  addStock(symbol: string) {
+  addStock(symbol: string): void {
     const stockSymbols: string[] = JSON.parse(
       localStorage.getItem('stockSymbols')
     );
@@ -16,7 +16,7 @@ export class LocalStorageService {
     }
   }
 
-  removeStock(symbol: string) {
+  removeStock(symbol: string): void {
     const stockSymbols: string[] = JSON.parse(
       localStorage.getItem('stockSymbols')
     );
@@ -28,7 +28,7 @@ export class LocalStorageService {
     }
   }
 
-  getStockList() {
+  getStockList(): string[] {
     return JSON.parse(localStorage.getItem('stockSymbols'));
   }
 
