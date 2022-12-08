@@ -7,7 +7,7 @@
         placeholder="Enter symbol"
         ngModel
       />
-      <button class="button" id="trackBtn" type="submit">Track Stock</button>
+      <button id="trackBtn" type="submit">Track Stock</button>
     </form>
   </div>
   <div class="search__container__message" *ngIf="isLoading">Loading...</div>
@@ -27,13 +27,13 @@
   <p><b>Opening price:</b> {{ stock.openingPrice | currency }}</p>
   <p><b>High price:</b> {{ stock.highPrice | currency }}</p>
   <button
-    class="button close"
+    class="close"
     [attr.id]="'remove' + stock.symbol"
     (click)="removeStockCard(stock.symbol)"
   >
     X
   </button>
-  <button class="button sentiment">
+  <button class="sentiment">
     <a
       [attr.id]="'sentiment' + stock.symbol"
       routerLink="/sentiment/{{ stock.symbol }}"

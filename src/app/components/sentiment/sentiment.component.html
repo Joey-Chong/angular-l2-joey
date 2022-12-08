@@ -1,18 +1,30 @@
-<div *ngIf="sentimentCard">
-  <h1>{{ sentimentCard.name }}</h1>
-  <h3>({{ sentimentCard.symbol }})</h3>
-  <div *ngFor="let month of sentimentCard.monthly">
-    <p>{{ month.change }} {{ month.trendIcon }}</p>
-    <p>{{ month.mspr }}</p>
+<div class="card" *ngIf="sentimentCard">
+  <h1>{{ sentimentCard.name }} ({{ sentimentCard.symbol }})</h1>
+  <div class="monthly">
+    <div *ngFor="let month of sentimentCard.monthly">
+      <p>{{ getMonthName(month.month) }} {{ month.year }}</p>
+      <p>
+        <b>Change:</b> {{ month.change }}
+        <span
+          class="trend-icon"
+          [class.red]="month.change < 0"
+          [class.green]="month.change > 0"
+          [innerHtml]="month.trendIcon"
+        ></span>
+      </p>
+      <p><b>MSPR:</b> {{ month.mspr }}</p>
+    </div>
   </div>
 </div>
 
-<p *ngIf="isLoading">Loading...</p>
+<div class="card" *ngIf="isLoading">Loading...</div>
 
-<div *ngIf="errorMsg">
-  <p>{{ errorMsg }}</p>
+<div class="card" *ngIf="errorMsg">
+  {{ errorMsg }}
 </div>
 
-<a id="backBtn" routerLink="/" routerLinkActive="active"
-  >Back to list of stocks</a
->
+<button>
+  <a id="backBtn" routerLink="/" routerLinkActive="active"
+    >Back to list of stocks</a
+  >
+</button>

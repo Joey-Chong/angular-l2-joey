@@ -9,7 +9,7 @@ import { SentimentService } from '../../services/sentiment.service';
 @Component({
   selector: 'app-sentiment',
   templateUrl: './sentiment.component.html',
-  styleUrls: ['./sentiment.component.css'],
+  styleUrls: ['./sentiment.component.scss'],
 })
 export class SentimentComponent implements OnInit {
   private unsub$ = new Subject<void>();
@@ -55,5 +55,12 @@ export class SentimentComponent implements OnInit {
   ngOnDestroy() {
     this.unsub$.next();
     this.unsub$.complete();
+  }
+
+  getMonthName(monthNumber) {
+    const date = new Date();
+    date.setMonth(monthNumber - 1);
+  
+    return date.toLocaleString('en-US', { month: 'long' });
   }
 }

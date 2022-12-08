@@ -11,7 +11,9 @@ export class SentimentService {
   constructor(private http: HttpClient) {}
 
   getSentiment(symbol: string): Observable<ISentimentResponse> {
+    // endpoint doesn't cross year?
     const date = new Date();
+    console.log(date);
     // using en-CA to get the format we need
     const to = new Date(date.getFullYear(), date.getMonth()).toLocaleDateString(
       'en-CA'
@@ -66,6 +68,6 @@ export class SentimentService {
       };
     });
     // ascending order, making sure data is in order
-    return monthlyData.sort((a, b) => a - b);
+    return monthlyData.sort((a, b) => a.month - b.month);
   }
 }

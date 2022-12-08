@@ -1,0 +1,66 @@
+.card {
+  width: 80%;
+  min-width: 600px;
+  position: relative;
+  margin: 12px auto;
+  border: solid 4px #41403e;
+  align-self: center;
+  background: white;
+  padding: 12px 24px;
+  transition: all 0.5s ease;
+  outline: none;
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+}
+
+.monthly {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 8px;
+
+  & > div {
+    width: 33%;
+    border: solid 4px #41403e;
+    align-self: center;
+    background: white;
+    padding: 12px 24px;
+    transition: all 0.5s ease;
+    outline: none;
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+  }
+}
+
+button {
+  border: solid 2px #41403e;
+  align-self: center;
+  background: white;
+  padding: 8px;
+  transition: all 0.5s ease;
+  color: #41403e;
+  font-size: 14px;
+  outline: none;
+  box-shadow: 20px 38px 34px -26px hsla(0, 0%, 0%, 0.2);
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+
+  &:hover {
+    box-shadow: 2px 8px 4px -6px hsla(0, 0%, 0%, 0.3);
+  }
+
+  & > a {
+    text-decoration: none;
+    color: #41403e;
+  }
+}
+
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
+}
+
+.trend-icon {
+  font-size: 20px;
+}
