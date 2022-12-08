@@ -1,5 +1,7 @@
 <div class="search__wrapper">
-  <h3 class="title">Enter the symbol of a stock to track (i.e. AAPL, TSLA, GOOGL)</h3>
+  <h3 class="title">
+    Enter the symbol of a stock to track (i.e. AAPL, TSLA, GOOGL)
+  </h3>
   <div class="search__container">
     <form #stockForm="ngForm" (ngSubmit)="onSubmit(stockForm)">
       <input
@@ -25,7 +27,7 @@
     [class.red]="stock.changeToday < 0"
     [class.green]="stock.changeToday > 0"
   ></h3>
-  <p><b>Changed today:</b> {{ stock.changeToday | percent: '0.1-4' }}</p>
+  <p><b>Change today:</b> {{ stock.changeToday | percent: '0.1-4' }}</p>
   <p><b>Current price:</b> {{ stock.currentPrice | currency }}</p>
   <p><b>Opening price:</b> {{ stock.openingPrice | currency }}</p>
   <p><b>High price:</b> {{ stock.highPrice | currency }}</p>
